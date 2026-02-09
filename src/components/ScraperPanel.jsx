@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { useState } from 'react'
 import { ChevronRight, ChevronLeft, Copy, Check, Play, Plus, Loader2, Info } from 'lucide-react'
+=======
+import { useState, useEffect } from 'react'
+import { ChevronRight, ChevronLeft, Copy, Check, Play, Plus, Loader2, Info, Shield, AlertTriangle } from 'lucide-react'
+>>>>>>> testing
 import { useScraperStore } from '../store/useScraperStore'
 import { getScraperCode } from '../utils/scraper'
 import clsx from 'clsx'
@@ -11,7 +16,21 @@ export default function ScraperPanel() {
   const [importing, setImporting] = useState(false)
   const [error, setError] = useState('')
   
+<<<<<<< HEAD
   const { addProducts, setProducts, products, incrementScrapedPages } = useScraperStore()
+=======
+  const { 
+    addProducts, 
+    setProducts, 
+    products, 
+    incrementScrapedPages,
+    settings,
+    activeProxy,
+    banDetected,
+    setBanDetected,
+    lastBanReason
+  } = useScraperStore()
+>>>>>>> testing
   
   const scraperCode = getScraperCode()
   
@@ -33,9 +52,26 @@ export default function ScraperPanel() {
     setError('')
     try {
       const data = JSON.parse(jsonInput)
+<<<<<<< HEAD
       if (Array.isArray(data) && data.length > 0) {
         // Renumber products
         const numbered = data.map((p, i) => ({
+=======
+      
+      // Check if response indicates a ban
+      if (data.banned || data.error) {
+        setBanDetected(true, data.reason || 'Scraping blocked or page format changed')
+        setError(data.reason || 'Ban detected! Enable proxy rotation in settings.')
+        return
+      }
+      
+      // Handle products array
+      const products = data.products || data
+      
+      if (Array.isArray(products) && products.length > 0) {
+        // Renumber products
+        const numbered = products.map((p, i) => ({
+>>>>>>> testing
           ...p,
           no: products.length + i + 1
         }))
@@ -43,6 +79,14 @@ export default function ScraperPanel() {
         incrementScrapedPages()
         setJsonInput('')
         setImporting(false)
+<<<<<<< HEAD
+=======
+        
+        // Clear ban status on successful scrape
+        if (banDetected) {
+          setBanDetected(false)
+        }
+>>>>>>> testing
       } else {
         setError('Invalid data format. Expected an array of products.')
       }
@@ -93,6 +137,32 @@ export default function ScraperPanel() {
           <div>
             <h2 className="text-lg font-bold text-dark-50">Scraper Console</h2>
             <p className="text-sm text-dark-400">Copy & paste to scrape</p>
+<<<<<<< HEAD
+=======
+            
+            {/* Proxy Status */}
+            {settings.useProxy && (
+              <div className="mt-3 flex items-center gap-2 text-xs">
+                <Shield className="w-4 h-4 text-green-400" />
+                <span className="text-dark-300">
+                  Proxy: {activeProxy ? `${activeProxy.host}:${activeProxy.port}` : 'Not selected'}
+                </span>
+              </div>
+            )}
+            
+            {/* Ban Warning */}
+            {banDetected && (
+              <div className="mt-3 bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+                <div className="flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  <div className="text-xs">
+                    <p className="font-semibold text-red-400">Ban Detected!</p>
+                    <p className="text-red-300 mt-1">{lastBanReason}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+>>>>>>> testing
           </div>
           
           {/* Step 1 */}

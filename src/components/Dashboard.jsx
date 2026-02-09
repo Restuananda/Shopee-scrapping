@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import { Package, TrendingUp, MapPin, Star, ArrowRight, Clock } from 'lucide-react'
 import { useScraperStore } from '../store/useScraperStore'
 
 export default function Dashboard({ onNavigate }) {
   const { products, history, scrapedPages } = useScraperStore()
+=======
+import { Package, TrendingUp, MapPin, Star, ArrowRight, Clock, FileText } from 'lucide-react'
+import { useScraperStore } from '../store/useScraperStore'
+
+export default function Dashboard({ onNavigate }) {
+  const { products, history, scrapedPages, itemsPerPage } = useScraperStore()
+>>>>>>> testing
   
   // Calculate stats
   const totalProducts = products.length
@@ -157,6 +165,39 @@ export default function Dashboard({ onNavigate }) {
         </div>
       </div>
       
+<<<<<<< HEAD
+=======
+      {/* Performance Info */}
+      {products.length > 0 && (
+        <div className="card p-6 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-purple-500/20">
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center">
+                <FileText className="w-6 h-6 text-purple-400" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-dark-100 mb-1">Pagination Active</h3>
+                <p className="text-sm text-dark-300">
+                  Displaying <span className="font-semibold text-purple-400">{itemsPerPage}</span> products per page
+                </p>
+                <p className="text-xs text-dark-400 mt-1">
+                  Total pages: {Math.ceil(products.length / itemsPerPage)} • 
+                  Optimized for fast rendering
+                </p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-dark-400 mb-1">Storage</p>
+              <p className="text-lg font-bold text-purple-400">
+                {(JSON.stringify(products).length / 1024).toFixed(1)} KB
+              </p>
+              <p className="text-xs text-dark-400">in localStorage</p>
+            </div>
+          </div>
+        </div>
+      )}
+      
+>>>>>>> testing
       {/* Recent Products Preview */}
       {products.length > 0 && (
         <div className="card p-6">

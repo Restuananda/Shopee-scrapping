@@ -6,7 +6,15 @@ import ProductTable from './components/ProductTable'
 import ProductGrid from './components/ProductGrid'
 import History from './components/History'
 import Settings from './components/Settings'
+<<<<<<< HEAD
 import ScraperPanel from './components/ScraperPanel'
+=======
+import ProxyManager from './components/ProxyManager'
+import ImportMerge from './components/ImportMerge'
+import DataTransform from './components/DataTransform'
+import ScraperPanel from './components/ScraperPanel'
+import StorageMonitor from './components/StorageMonitor'
+>>>>>>> testing
 
 function App() {
   const [currentView, setCurrentView] = useState('dashboard')
@@ -21,6 +29,15 @@ function App() {
         return viewMode === 'table' 
           ? <ProductTable viewMode={viewMode} setViewMode={setViewMode} />
           : <ProductGrid viewMode={viewMode} setViewMode={setViewMode} />
+<<<<<<< HEAD
+=======
+      case 'import':
+        return <ImportMerge />
+      case 'transform':
+        return <DataTransform />
+      case 'proxy':
+        return <ProxyManager />
+>>>>>>> testing
       case 'history':
         return <History />
       case 'settings':
@@ -41,6 +58,10 @@ function App() {
       </main>
       
       <ScraperPanel />
+<<<<<<< HEAD
+=======
+      <StorageMonitor />
+>>>>>>> testing
     </div>
   )
 }

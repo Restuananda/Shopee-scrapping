@@ -1,10 +1,20 @@
+<<<<<<< HEAD
 import { LayoutDashboard, Package, History, Settings, ShoppingBag } from 'lucide-react'
+=======
+import { LayoutDashboard, Package, History, Settings, ShoppingBag, Shield, Upload, Repeat } from 'lucide-react'
+>>>>>>> testing
 import { useScraperStore } from '../store/useScraperStore'
 import clsx from 'clsx'
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'products', label: 'Products', icon: Package },
+<<<<<<< HEAD
+=======
+  { id: 'import', label: 'Import & Merge', icon: Upload },
+  { id: 'transform', label: 'Transform Data', icon: Repeat },
+  { id: 'proxy', label: 'Proxy Manager', icon: Shield },
+>>>>>>> testing
   { id: 'history', label: 'History', icon: History },
   { id: 'settings', label: 'Settings', icon: Settings },
 ]

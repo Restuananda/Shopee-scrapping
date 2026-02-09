@@ -2,10 +2,27 @@ import { useState } from 'react'
 import { Grid3X3, List, Search, Download, Trash2, ExternalLink, Star, MapPin } from 'lucide-react'
 import { useScraperStore } from '../store/useScraperStore'
 import { exportToCSV, exportToJSON, exportToMD } from '../utils/scraper'
+<<<<<<< HEAD
 import clsx from 'clsx'
 
 export default function ProductGrid({ viewMode, setViewMode }) {
   const { products, clearProducts, saveToHistory } = useScraperStore()
+=======
+import Pagination from './Pagination'
+import clsx from 'clsx'
+
+export default function ProductGrid({ viewMode, setViewMode }) {
+  const { 
+    products = [], 
+    clearProducts, 
+    saveToHistory,
+    itemsPerPage = 20,
+    currentDataPage = 1,
+    totalDataPages = 1,
+    setItemsPerPage,
+    setCurrentDataPage
+  } = useScraperStore()
+>>>>>>> testing
   const [search, setSearch] = useState('')
   
   const filteredProducts = products.filter(p => 
@@ -13,6 +30,18 @@ export default function ProductGrid({ viewMode, setViewMode }) {
     p.location.toLowerCase().includes(search.toLowerCase())
   )
   
+<<<<<<< HEAD
+=======
+  // Apply pagination
+  const safeItemsPerPage = itemsPerPage || 20; // Fallback to 20
+  const totalFilteredPages = filteredProducts.length > 0
+    ? Math.ceil(filteredProducts.length / safeItemsPerPage)
+    : 1;
+  const startIndex = (currentDataPage - 1) * safeItemsPerPage;
+  const endIndex = startIndex + safeItemsPerPage;
+  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+  
+>>>>>>> testing
   const handleExport = (format) => {
     const filename = `shopee_${new Date().toISOString().split('T')[0]}`
     switch (format) {
@@ -91,8 +120,14 @@ export default function ProductGrid({ viewMode, setViewMode }) {
       
       {/* Grid */}
       {filteredProducts.length > 0 ? (
+<<<<<<< HEAD
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((product, index) => (
+=======
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {paginatedProducts.map((product, index) => (
+>>>>>>> testing
             <div 
               key={index} 
               className="card overflow-hidden group hover:border-dark-700 transition-all duration-300 hover:-translate-y-1"
@@ -169,6 +204,21 @@ export default function ProductGrid({ viewMode, setViewMode }) {
             </div>
           ))}
         </div>
+<<<<<<< HEAD
+=======
+        
+        {/* Pagination */}
+        <Pagination
+          currentPage={currentDataPage}
+          totalPages={totalFilteredPages}
+          onPageChange={setCurrentDataPage}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={setItemsPerPage}
+          totalItems={filteredProducts.length}
+          itemName="products"
+        />
+      </div>
+>>>>>>> testing
       ) : (
         <div className="card p-12 text-center">
           <div className="w-16 h-16 rounded-2xl bg-dark-800 flex items-center justify-center mx-auto mb-4">

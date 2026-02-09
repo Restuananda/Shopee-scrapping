@@ -2,16 +2,38 @@ import { useState } from 'react'
 import { Grid3X3, List, Search, Download, Trash2, ExternalLink, Star, Copy, Check } from 'lucide-react'
 import { useScraperStore } from '../store/useScraperStore'
 import { exportToCSV, exportToJSON, exportToMD } from '../utils/scraper'
+<<<<<<< HEAD
 import clsx from 'clsx'
 
 export default function ProductTable({ viewMode, setViewMode }) {
   const { products, clearProducts, saveToHistory } = useScraperStore()
+=======
+import Pagination from './Pagination'
+import clsx from 'clsx'
+
+export default function ProductTable({ viewMode, setViewMode }) {
+  const { 
+    products = [], 
+    clearProducts, 
+    saveToHistory,
+    itemsPerPage = 20,
+    currentDataPage = 1,
+    totalDataPages = 1,
+    setItemsPerPage,
+    setCurrentDataPage
+  } = useScraperStore()
+>>>>>>> testing
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState('no')
   const [sortOrder, setSortOrder] = useState('asc')
   const [copied, setCopied] = useState(false)
   
+<<<<<<< HEAD
   const filteredProducts = products
+=======
+  // Filter and sort products
+  const filteredAndSortedProducts = products
+>>>>>>> testing
     .filter(p => 
       p.name.toLowerCase().includes(search.toLowerCase()) ||
       p.location.toLowerCase().includes(search.toLowerCase())
@@ -35,6 +57,18 @@ export default function ProductTable({ viewMode, setViewMode }) {
       return aVal < bVal ? 1 : -1
     })
   
+<<<<<<< HEAD
+=======
+  // Apply pagination
+  const safeItemsPerPage = itemsPerPage || 20; // Fallback to 20
+  const totalFilteredPages = filteredAndSortedProducts.length > 0
+    ? Math.ceil(filteredAndSortedProducts.length / safeItemsPerPage)
+    : 1;
+  const startIndex = (currentDataPage - 1) * safeItemsPerPage;
+  const endIndex = startIndex + safeItemsPerPage;
+  const paginatedProducts = filteredAndSortedProducts.slice(startIndex, endIndex);
+  
+>>>>>>> testing
   const handleSort = (column) => {
     if (sortBy === column) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
@@ -146,7 +180,11 @@ export default function ProductTable({ viewMode, setViewMode }) {
       </div>
       
       {/* Table */}
+<<<<<<< HEAD
       {filteredProducts.length > 0 ? (
+=======
+      {filteredAndSortedProducts.length > 0 ? (
+>>>>>>> testing
         <div className="card overflow-hidden">
           <div className="table-container">
             <table className="table">
@@ -172,7 +210,11 @@ export default function ProductTable({ viewMode, setViewMode }) {
                 </tr>
               </thead>
               <tbody>
+<<<<<<< HEAD
                 {filteredProducts.map((product, index) => (
+=======
+                {paginatedProducts.map((product, index) => (
+>>>>>>> testing
                   <tr key={index} className="group">
                     <td className="font-mono text-dark-400">{product.no}</td>
                     <td>
@@ -237,6 +279,20 @@ export default function ProductTable({ viewMode, setViewMode }) {
               </tbody>
             </table>
           </div>
+<<<<<<< HEAD
+=======
+          
+          {/* Pagination */}
+          <Pagination
+            currentPage={currentDataPage}
+            totalPages={totalFilteredPages}
+            onPageChange={setCurrentDataPage}
+            itemsPerPage={itemsPerPage}
+            onItemsPerPageChange={setItemsPerPage}
+            totalItems={filteredAndSortedProducts.length}
+            itemName="products"
+          />
+>>>>>>> testing
         </div>
       ) : (
         <div className="card p-12 text-center">

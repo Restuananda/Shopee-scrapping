@@ -1,7 +1,63 @@
+<<<<<<< HEAD
 // Scraper code to be injected into Shopee page
 export const getScraperCode = () => `
 (function() {
   window.__SHOPEE_SCRAPER__ = {
+=======
+// Scraper code to be injected into Shopee page with anti-detection
+export const getScraperCode = () => `
+(function() {
+  window.__SHOPEE_SCRAPER__ = {
+    // Configuration
+    config: {
+      useProxy: false,
+      randomizeHeaders: true,
+      detectBan: true
+    },
+    
+    // Ban detection patterns
+    banPatterns: [
+      'captcha',
+      'unusual traffic',
+      'blocked',
+      'access denied',
+      'rate limit',
+      'too many requests',
+      'suspended',
+      'verification required',
+      'please verify',
+      'robot check'
+    ],
+    
+    // Check if page is blocked/banned
+    isBanned: function() {
+      var bodyText = document.body.innerText.toLowerCase();
+      for (var i = 0; i < this.banPatterns.length; i++) {
+        if (bodyText.includes(this.banPatterns[i])) {
+          return {
+            banned: true,
+            reason: 'Detected: ' + this.banPatterns[i]
+          };
+        }
+      }
+      
+      // Check for CAPTCHA elements
+      if (document.querySelector('iframe[src*="captcha"]') || 
+          document.querySelector('[class*="captcha"]') ||
+          document.querySelector('#captcha')) {
+        return {
+          banned: true,
+          reason: 'CAPTCHA detected'
+        };
+      }
+      
+      return {
+        banned: false,
+        reason: null
+      };
+    },
+    
+>>>>>>> testing
     findCards: function(mode) {
       mode = mode || 'main';
       var selectors = ['.shop-search-result-view__item', '.shopee-search-item-result__item', '[data-sqe="item"]', '.col-xs-2-4'];
@@ -63,7 +119,33 @@ export const getScraperCode = () => `
     },
     
     scrape: function() {
+<<<<<<< HEAD
       var cards = this.findCards();
+=======
+      // Check for ban first
+      var banCheck = this.isBanned();
+      if (banCheck.banned) {
+        return {
+          error: true,
+          banned: true,
+          reason: banCheck.reason,
+          products: []
+        };
+      }
+      
+      var cards = this.findCards();
+      
+      // If no cards found, might be banned or wrong page
+      if (cards.length === 0) {
+        return {
+          error: true,
+          banned: false,
+          reason: 'No product cards found. Page might not be loaded or format changed.',
+          products: []
+        };
+      }
+      
+>>>>>>> testing
       var products = [];
       var self = this;
       cards.forEach(function(card, i) {
@@ -79,7 +161,17 @@ export const getScraperCode = () => `
           image: self.extractImage(card)
         });
       });
+<<<<<<< HEAD
       return products;
+=======
+      
+      return {
+        error: false,
+        banned: false,
+        reason: null,
+        products: products
+      };
+>>>>>>> testing
     },
     
     getPageInfo: function() {
@@ -97,6 +189,37 @@ export const getScraperCode = () => `
       btn = document.querySelector('.shopee-page-controller .shopee-icon-button--right:not([disabled])');
       if (btn) { btn.click(); return true; }
       return false;
+<<<<<<< HEAD
+=======
+    },
+    
+    // Simulate human-like scrolling
+    humanScroll: function() {
+      var scrollHeight = document.documentElement.scrollHeight;
+      var currentScroll = 0;
+      var scrollStep = Math.random() * 300 + 200; // Random scroll step
+      
+      var scrollInterval = setInterval(function() {
+        currentScroll += scrollStep;
+        window.scrollTo(0, currentScroll);
+        
+        if (currentScroll >= scrollHeight - window.innerHeight) {
+          clearInterval(scrollInterval);
+        }
+      }, Math.random() * 200 + 100); // Random interval
+    },
+    
+    // Random mouse movements (simulated)
+    simulateActivity: function() {
+      // Trigger some mouse events to appear more human
+      var event = new MouseEvent('mousemove', {
+        bubbles: true,
+        cancelable: true,
+        clientX: Math.random() * window.innerWidth,
+        clientY: Math.random() * window.innerHeight
+      });
+      document.dispatchEvent(event);
+>>>>>>> testing
     }
   };
   return 'ready';
