@@ -1,0 +1,34 @@
+[
+  {
+    "host": "proxy1.example.com",
+    "port": 8080,
+    "type": "http",
+    "username": "your_username",
+    "password": "your_password",
+    "country": "ID"
+  },
+  {
+    "host": "proxy2.example.com",
+    "port": 8080,
+    "type": "http",
+    "username": "your_username",
+    "password": "your_password",
+    "country": "SG"
+  },
+  {
+    "host": "proxy3.example.com",
+    "port": 1080,
+    "type": "socks5",
+    "username": "",
+    "password": "",
+    "country": "US"
+  },
+  {
+    "host": "192.168.1.100",
+    "port": 3128,
+    "type": "https",
+    "username": "admin",
+    "password": "secure_pass",
+    "country": "MY"
+  }
+]

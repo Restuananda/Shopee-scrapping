@@ -1,0 +1,17 @@
+# Proxy List Format: host:port:type:username:password
+# Types: http, https, socks5
+# Leave username/password empty if not required
+
+# Example proxies (replace with your actual proxies)
+proxy1.example.com:8080:http:user1:pass1
+proxy2.example.com:8080:http:user2:pass2
+192.168.1.100:3128:https:admin:secure_pass
+socks-proxy.example.com:1080:socks5
+
+# Indonesian proxies (recommended for Shopee Indonesia)
+id-proxy1.example.com:8080:http:username:password
+id-proxy2.example.com:8080:http:username:password
+
+# Free proxies (less reliable, use for testing only)
+# 103.152.112.162:80:http
+# 202.169.51.46:8080:http
